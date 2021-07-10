@@ -18,6 +18,9 @@ if(KernelPlatformRockpro64)
     set(KernelArmPASizeBits40 ON)
     list(APPEND KernelDTSList "tools/dts/rockpro64.dts")
     list(APPEND KernelDTSList "src/plat/rockpro64/overlay-rockpro64.dts")
+    if(KernelArmHypervisorSupport)
+        list(APPEND KernelDTSList "src/plat/rockpro64/overlay-reserve-vm-memory.dts")
+    endif()
     declare_default_headers(
         TIMER_FREQUENCY 24000000llu
         MAX_IRQ 181
