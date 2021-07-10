@@ -366,7 +366,7 @@ block ttbr {
 }
 
 #ifdef CONFIG_ARM_HYPERVISOR_SUPPORT
-#if CONFIG_ARM_GIC_V3_SUPPORT
+#ifdef CONFIG_ARM_GIC_V3_SUPPORT
 block virq_invalid {
     field virqType      2
     padding             1
