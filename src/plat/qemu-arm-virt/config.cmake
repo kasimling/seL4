@@ -34,6 +34,7 @@ if(KernelPlatformQEMUArmVirt)
         set(KernelArmCortexA53 ON)
         set(KernelArchArmV8a ON)
     endif()
+    set(KernelArmGicV3 ON)
     execute_process(COMMAND qemu-system-${QEMU_ARCH} -version OUTPUT_VARIABLE QEMU_VERSION_STR)
     string(
         REGEX
@@ -66,7 +67,7 @@ if(KernelPlatformQEMUArmVirt)
     find_program(QEMU_BINARY qemu-system-${QEMU_ARCH})
     execute_process(
         COMMAND
-            ${QEMU_BINARY} -machine virt,dumpdtb=${DTBPath},${QEMU_VIRT_OPTION} -m ${QEMU_MEMORY}
+            ${QEMU_BINARY} -machine virt,gic-version=3,dumpdtb=${DTBPath},${QEMU_VIRT_OPTION} -m ${QEMU_MEMORY}
             -cpu ${ARM_CPU} -smp ${QEMU_SMP_OPTION} -nographic
     )
     execute_process(
@@ -84,7 +85,7 @@ if(KernelPlatformQEMUArmVirt)
         MAX_IRQ 159
         NUM_PPI 32
         TIMER drivers/timer/arm_generic.h
-        INTERRUPT_CONTROLLER arch/machine/gic_v2.h
+        INTERRUPT_CONTROLLER arch/machine/gic_v3.h
         CLK_MAGIC 4611686019llu
         CLK_SHIFT 58u
         KERNEL_WCET 10u
@@ -93,5 +94,5 @@ endif()
 
 add_sources(
     DEP "KernelPlatformQEMUArmVirt"
-    CFILES src/arch/arm/machine/gic_v2.c src/arch/arm/machine/l2c_nop.c
+    CFILES src/arch/arm/machine/gic_v3.c src/arch/arm/machine/l2c_nop.c
 )
