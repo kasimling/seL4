@@ -214,8 +214,8 @@ BOOT_CODE static void gicr_locate_interface(void)
              */
             val = gic_rdist_map[core_id]->waker;
             if (val & GICR_WAKER_ChildrenAsleep) {
-                printf("GICv3: GICR_WAKER returned non-zero %x\n", val);
-                halt();
+                printf("GICv3: GICR_WAKER returned non-zero %x (ignored)\n", val);
+                //halt();
             }
 
             break;
